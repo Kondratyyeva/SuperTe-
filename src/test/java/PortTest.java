@@ -48,4 +48,27 @@ public class PortTest {
         port.getIndexes().add("1a-2");
         port.getUniqueGroups();
     }
+    @Test
+    public void bigNumbersInputShouldBeCorrect(){
+        Port port = new Port(new ArrayList<>());
+        port.getIndexes().add("11");
+        port.getIndexes().add("14-16");
+        port.getIndexes().add("21,22-23,24");
+        List<List<Integer>> expectedResult = new ArrayList<>();
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,14,21)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,14,22)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,14,23)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,14,24)));
+
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,15,21)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,15,22)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,15,23)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,15,24)));
+
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,16,21)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,16,22)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,16,23)));
+        expectedResult.add(new ArrayList<>(Arrays.asList(11,16,24)));
+        Assert.assertEquals(expectedResult,port.getUniqueGroups());
+    }
 }

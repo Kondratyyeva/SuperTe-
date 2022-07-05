@@ -40,15 +40,17 @@ public class Port {
             integers.add(Integer.parseInt(string));
         }else{
             boolean isSequence=false;
+            boolean isLastElement=false;
             StringBuilder result=new StringBuilder();
             int i=0;
             while(i<string.length()){
                 while(string.charAt(i)!=','&&string.charAt(i)!='-'){
                     result.append(string.charAt(i));
-                    if(i!=string.length()-1){
+                    if(i<string.length()-1){
                         i++;
-                    }else{
+                    }else if (i==string.length()-1){
                         i++;
+                        isLastElement=true;
                         break;
                     }
                 }
@@ -59,6 +61,8 @@ public class Port {
                     }
                     isSequence=false;
                     result=new StringBuilder();
+                }else if(isLastElement){
+                    break;
                 }else if(string.charAt(i) =='-') {
                     integers.add(Integer.parseInt(result.toString()));
                     result = new StringBuilder();
