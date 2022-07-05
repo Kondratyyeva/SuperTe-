@@ -36,48 +36,17 @@ public class Port {
     }
     private List<Integer> workWithString(String string){
         List<Integer> integers = new ArrayList<>();
-        if(!string.contains(",")&&!string.contains("-")){
-            integers.add(Integer.parseInt(string));
-        }else{
-            boolean isSequence=false;
-            boolean isLastElement=false;
-            StringBuilder result=new StringBuilder();
-            int i=0;
-            while(i<string.length()){
-                while(string.charAt(i)!=','&&string.charAt(i)!='-'){
-                    result.append(string.charAt(i));
-                    if(i<string.length()-1){
-                        i++;
-                    }else if (i==string.length()-1){
-                        i++;
-                        isLastElement=true;
-                        break;
-                    }
+        String[] strings = string.split(",");
+        for(String item: strings){
+            if(!item.contains("-")){
+                integers.add(Integer.parseInt(item));
+            }else{
+                String[] array = item.split("-");
+                int begin = Integer.parseInt(array[0]);
+                int end = Integer.parseInt(array[1]);
+                for(int k=begin;k<=end;k++){
+                    integers.add(k);
                 }
-                if(isSequence){
-                    int end=Integer.parseInt(result.toString());
-                    for(int k=integers.get(integers.size()-1)+1;k<=end;k++){
-                        integers.add(k);
-                    }
-                    isSequence=false;
-                    result=new StringBuilder();
-                }else if(isLastElement){
-                    break;
-                }else if(string.charAt(i) =='-') {
-                    integers.add(Integer.parseInt(result.toString()));
-                    result = new StringBuilder();
-                    isSequence = true;
-                    i++;
-                } else if (string.charAt(i) == ','){
-                    if (!result.isEmpty()) {
-                        integers.add(Integer.parseInt(result.toString()));
-                        result=new StringBuilder();
-                    }
-                    i++;
-                }
-            }
-            if(!result.isEmpty()){
-                integers.add(Integer.parseInt(result.toString()));
             }
         }
         return integers;
