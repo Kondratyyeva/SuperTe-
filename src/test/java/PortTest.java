@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PortTest {
     @Test
-    public void firstMethodRightInput(){
+    public void firstMethodRightInputShouldBeCorrect(){
         Port port = new Port(new ArrayList<>());
         port.getIndexes().add("1,3-5");
         port.getIndexes().add("2");
@@ -20,7 +20,7 @@ public class PortTest {
         Assert.assertEquals(expectedResult,port.convertIndexes());
     }
     @Test
-    public void secondMethodWork(){
+    public void secondMethodRightInputShouldBeCorrect(){
         Port port = new Port(new ArrayList<>());
         port.getIndexes().add("1,3-5");
         port.getIndexes().add("2");
@@ -35,5 +35,17 @@ public class PortTest {
         expectedResult.add(new ArrayList<>(Arrays.asList(5,2,3)));
         expectedResult.add(new ArrayList<>(Arrays.asList(5,2,4)));
         Assert.assertEquals(expectedResult,port.getUniqueGroups());
+    }
+    @Test(expected = NumberFormatException.class)
+    public void wrongInputSymbolShouldThrowException(){
+        Port port = new Port(new ArrayList<>());
+        port.getIndexes().add("1&-2");
+        port.getUniqueGroups();
+    }
+    @Test(expected = NumberFormatException.class)
+    public void wrongInputLetterShouldThrowException(){
+        Port port = new Port(new ArrayList<>());
+        port.getIndexes().add("1a-2");
+        port.getUniqueGroups();
     }
 }

@@ -36,18 +36,16 @@ public class Port {
     }
     private List<Integer> workWithString(String string){
         List<Integer> integers = new ArrayList<>();
-        int length = string.length();
-        if(length==1){
-            int parseInt = Integer.parseInt(String.valueOf(string.charAt(0)));
-            integers.add(parseInt);
+        if(!string.contains(",")&&!string.contains("-")){
+            integers.add(Integer.parseInt(string));
         }else{
             boolean isSequence=false;
             StringBuilder result=new StringBuilder();
             int i=0;
-            while(i<length){
+            while(i<string.length()){
                 while(string.charAt(i)!=','&&string.charAt(i)!='-'){
                     result.append(string.charAt(i));
-                    if(i!=length-1){
+                    if(i!=string.length()-1){
                         i++;
                     }else{
                         i++;
